@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng Dụng Tính Tiền Bán Hàng</title>
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            margin: 20px;
+            font-size: 14px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #000;
+            text-align: center;
+            padding: 5px;
+        }
+        th {
+            background-color: #ccc; /* Dòng tiêu đề chung màu */
+        }
+        td.stt,
+        td.name {
+            background-color: #eee; /* Màu xám nhạt cho cột STT và Tên hàng hóa */
+        }
+        td.select:nth-child(6) {
+            background-color: #ddd; /* Màu xám đậm hơn cho cột "Chọn mua" */
+        }
+        td.default {
+            background-color: #f7f7f7; /* Màu xám rất nhạt cho các ô còn lại */
+        }
+        input[type="number"] {
+            width: 50px;
+            text-align: center;
+        }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .total {
+            font-weight: bold;
+            text-align: center;
+        }
+        .vat-cell {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h3>Ứng Dụng Tính Tiền Bán Hàng</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên hàng hóa</th>
+                <th>Số lượng có</th>
+                <th>Số lượng mua</th>
+                <th>Đơn giá</th>
+                <th>Chọn mua</th>
+            </tr>
+        </thead>
+        <tbody id="productTable">
+            <tr>
+                <td class="stt">1</td>
+                <td class="name">CPU</td>
+                <td class="default">14</td>
+                <td class="default"><input type="number" min="0" max="14" disabled></td>
+                <td class="default">150$</td>
+                <td class="select"><input type="checkbox" onchange="toggleInput(this)"></td>
+            </tr>
+            <tr>
+                <td class="stt">2</td>
+                <td class="name">HDD</td>
+                <td class="default">14</td>
+                <td class="default"><input type="number" min="0" max="14" disabled></td>
+                <td class="default">120$</td>
+                <td class="select"><input type="checkbox" onchange="toggleInput(this)"></td>
+            </tr>
+            <tr>
+                <td class="stt">3</td>
+                <td class="name">RAM</td>
+                <td class="default">20</td>
+                <td class="default"><input type="number" min="0" max="20" disabled></td>
+                <td class="default">80$</td>
+                <td class="select"><input type="checkbox" onchange="toggleInput(this)"></td>
+            </tr>
+            <tr>
+                <td class="stt">4</td>
+                <td class="name">ROM</td>
+                <td class="default">15</td>
+                <td class="default"><input type="number" min="0" max="15" disabled></td>
+                <td class="default">100$</td>
+                <td class="select"><input type="checkbox" onchange="toggleInput(this)"></td>
+            </tr>
+            <tr>
+                <td class="stt"></td>
+                <td class="name"></td>
+                <td class="default"><button onclick="calculateTotal()">OK</button></td>
+                <td class="default" colspan="2" class="total">Tổng cộng: <span id="totalPrice">0</span>$</td>
+                <td class="vat-cell">
+                    <label><input type="checkbox" id="vat"> VAT (10%)</label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function toggleInput(checkbox) {
+            const input = checkbox.closest('tr').querySelector('input[type="number"]');
+            input.disabled = !checkbox.checked;
+            if (!checkbox.checked) input.value = '';
+        }
+
+        function calculateTotal() {
+            const rows = document.querySelectorAll('#productTable tr');
+            let total = 0;
+
+            rows.forEach(row => {
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                if (checkbox && checkbox.checked) {
+                    const quantity = row.querySelector('input[type="number"]').value;
+                    const maxQuantity = parseInt(row.cells[2]?.textContent || '0');
+                    const price = parseFloat(row.cells[4]?.textContent.replace('$', '') || '0');
+
+                    if (quantity === '' || quantity <= 0 || quantity > maxQuantity) {
+                        alert('Số lượng mua không hợp lệ!');
+                        return;
+                    }
+
+                    total += quantity * price;
+                }
+            });
+
+            const vatCheckbox = document.getElementById('vat');
+            if (vatCheckbox.checked) {
+                total *= 1.1; // Thêm 10% VAT
+            }
+
+            document.getElementById('totalPrice').textContent = total.toFixed(2);
+        }
+    </script>
+</body>
+</html>

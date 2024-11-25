@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang jQuery Datepicker</title>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, input {
+            font-size: 16px;
+            padding: 8px;
+        }
+        input {
+            width: 200px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            $("#date").datepicker({
+                dateFormat: "dd-mm-yy",     
+                minDate: -14,                  
+                maxDate: 14,                   
+                changeMonth: true,            
+                changeYear: true              
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <h2>Chọn ngày tháng</h2>
+
+    <label for="date">Ngày tháng:</label>
+    <input type="text" id="date" name="date">
+
+</body>
+</html>

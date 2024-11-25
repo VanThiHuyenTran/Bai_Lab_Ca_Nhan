@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Đăng Nhập</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input.error {
+            border: 1px solid red;
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .notification {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .notification.success {
+            color: rgb(154, 154, 154);
+        }
+
+        .notification.error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <form id="login-form">
+            <table>
+                <tr>
+                    <td><label for="username">Username</label></td>
+                    <td><input type="text" id="username" name="username" placeholder="Nhập username" required></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password</label></td>
+                    <td><input type="password" id="password" name="password" placeholder="Nhập password" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" id="notification" name="notification" placeholder="Thongbao" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button type="submit" id="login-btn">Login</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <script>
+        let isLoggedIn = false;
+
+        document.getElementById("login-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const notification = document.getElementById("notification");
+            const loginBtn = document.getElementById("login-btn");
+
+            document.getElementById("username").classList.remove("error");
+            document.getElementById("password").classList.remove("error");
+            notification.value = "";
+
+            if (username === "" || password === "") {
+                notification.value = "Sai thông tin đăng nhập";
+                return;
+            }
+
+            if (username === "admin" && password === "admin") {
+
+                notification.value = "Chúc mừng, bạn đã đăng nhập thành công!";
+                notification.classList.add("success");
+                isLoggedIn = true;
+
+         
+                loginBtn.textContent = "Logout";
+            } else {
+
+                notification.value = "Sai thông tin đăng nhập";
+                notification.classList.add("error");
+                document.getElementById("username").classList.add("error");
+                document.getElementById("password").classList.add("error");
+                isLoggedIn = false;
+            }
+        });
+
+ 
+        document.getElementById("login-btn").addEventListener("click", function() {
+            if (isLoggedIn) {
+ 
+                isLoggedIn = false;
+                document.getElementById("username").value = "";
+                document.getElementById("password").value = "";
+                document.getElementById("login-btn").textContent = "Login";
+                document.getElementById("username").classList.remove("error");
+                document.getElementById("password").classList.remove("error");
+            }
+        });
+    </script>
+</body>
+</html>

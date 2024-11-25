@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tính Lãi Suất Ngân Hàng</title>
+        <script>
+            function calculateLoan() {
+                var principal = parseFloat(document.getElementById('principal').value);
+                var rate = parseFloat(document.getElementById('rate').value) / 100;
+                var years = parseInt(document.getElementById('years').value);
+
+                if (isNaN(principal) || isNaN(rate) || isNaN(years)) {
+                    alert("Vui lòng nhập đầy đủ thông tin!");
+                    return;
+                }
+
+                var totalAmount = principal * (1 + rate * years); // Số tiền phải trả sau n năm
+
+                document.getElementById('result').innerHTML = "Số tiền phải trả sau " + years + " năm là: " + totalAmount.toFixed(2) + " VND";
+            }
+        </script>
+    </head>
+    <body>
+        <h2>Tính Lãi Suất Ngân Hàng - Lãi Đơn</h2>
+
+        <div>
+            <label for="principal">Số tiền vay (VND):</label>
+            <input type="number" id="principal" placeholder="Nhập số tiền vay" min="0"/>
+        </div>
+        <div>
+            <label for="rate">Lãi suất hàng năm (%):</label>
+            <input type="number" id="rate" placeholder="Nhập lãi suất hàng năm" min="0"/>
+
+        </div>
+        <div>
+            <label for="years">Số năm vay:</label>
+            <input type="number" id="years" placeholder="Nhập số năm vay" min="0"/>
+        </div>
+        <div>
+            <button onclick="calculateLoan()">Tính toán</button>
+        </div>
+
+        <div id="result"></div>
+    </body>
+</html>

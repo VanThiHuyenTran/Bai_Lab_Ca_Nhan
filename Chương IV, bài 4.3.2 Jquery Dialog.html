@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiển thị Popup</title>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+        }
+        #error-dialog, #confirm-dialog, #info-dialog, #option-dialog {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+          
+            $("#show-error").click(function() {
+                $("#error-dialog").dialog({
+                    autoOpen: false,
+                    title: "Thông báo lỗi",
+                    buttons: {
+                        "OK": function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                $("#error-dialog").dialog("open");
+            });
+
+            $("#show-confirm").click(function() {
+                $("#confirm-dialog").dialog({
+                    autoOpen: false,
+                    title: "Xác nhận hành động",
+                    buttons: {
+                        "Đồng ý": function() {
+                            alert("Đồng ý");
+                            $(this).dialog("close");
+                        },
+                        "Hủy": function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                $("#confirm-dialog").dialog("open");
+            });
+
+            $("#show-info").click(function() {
+                $("#info-dialog").dialog({
+                    autoOpen: false,
+                    title: "Thông tin",
+                    buttons: {
+                        "Đóng": function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                $("#info-dialog").dialog("open");
+            });
+
+            $("#show-option").click(function() {
+                $("#option-dialog").dialog({
+                    autoOpen: false,
+                    title: "Chọn tùy chọn",
+                    buttons: {
+                        "Tùy chọn 1": function() {
+                            alert("Chọn Tùy chọn 1");
+                            $(this).dialog("close");
+                        },
+                        "Tùy chọn 2": function() {
+                            alert("Chọn Tùy chọn 2");
+                            $(this).dialog("close");
+                        },
+                        "Hủy": function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                $("#option-dialog").dialog("open");
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <h2>jQuery Dialog</h2>
+
+    <button id="show-error">Hiển thị thông báo lỗi</button><br>
+    <button id="show-confirm">Hiển thị hộp thoại xác nhận lỗi</button><br>
+    <button id="show-info">Hiển thị thông tin</button><br>
+    <button id="show-option">Hiển thị tùy chọn</button><br>
+
+    <div id="error-dialog" title="Lỗi">
+        <p>Đây là thông báo lỗi!</p>
+    </div>
+
+    <div id="confirm-dialog" title="Xác nhận hành động">
+        <p>Bạn có chắc chắn muốn thực hiện hành động này?</p>
+    </div>
+
+    <div id="info-dialog" title="Thông tin">
+        <p>Đây là thông tin cơ bản.</p>
+    </div>
+
+    <div id="option-dialog" title="Chọn tùy chọn">
+        <p>Chọn một trong các tùy chọn dưới đây:</p>
+    </div>
+
+</body>
+</html>

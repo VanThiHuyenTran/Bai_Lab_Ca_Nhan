@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sản Phẩm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        form, table {
+            margin: 20px auto;
+            width: 80%;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 10px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quản Lý Sản Phẩm</h1>
+
+    <form id="addProductForm">
+        <input type="text" id="productName" placeholder="Nhập tên sản phẩm" required>
+        <button type="submit">Thêm</button>
+    </form>
+
+    <form id="editProductForm" style="display: none;">
+        <input type="text" id="editProductName" required>
+        <button type="button" onclick="updateProduct()">Sửa</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên Sản Phẩm</th>
+                <th>Sửa</th>
+                <th>Xóa</th>
+            </tr>
+        </thead>
+        <tbody id="productTableBody">
+
+        </tbody>
+    </table>
+
+    <script>
+        let products = [
+            "Sony Speria",
+            "Samsung Galaxy",
+            "Nokia 6",
+            "Xiaomi Redmi Note 4 ",
+            "Apple Iphone 6S",
+            "Xiaomi 5S Plus ",
+            "Apple Iphone 8 Plus",
+            "Fujitsu F-04E",
+            "Oppo A71"
+        ];
+
+        let editingIndex = null;
+
+        function displayProducts() {
+            const productTableBody = document.getElementById('productTableBody');
+            productTableBody.innerHTML = '';
+            products.forEach((product, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${product}</td>
+                    <td><button onclick="editProduct(${index})">Sửa</button></td>
+                    <td><button onclick="deleteProduct(${index})">Xóa</button></td>
+                `;
+                productTableBody.appendChild(row);
+            });
+        }
+
+        function addProduct(event) {
+            event.preventDefault();
+            const productName = document.getElementById('productName').value.trim();
+            if (productName) {
+                products.push(productName);
+                document.getElementById('productName').value = '';
+                alert("Thêm sản phẩm thành công!");
+                displayProducts();
+            } else {
+                alert("Vui lòng nhập tên sản phẩm!");
+            }
+        }
+
+        function editProduct(index) {
+            editingIndex = index;
+            document.getElementById('editProductForm').style.display = 'block';
+            document.getElementById('editProductName').value = products[index];
+        }
+
+        function updateProduct() {
+            const newName = document.getElementById('editProductName').value.trim();
+            if (newName) {
+                products[editingIndex] = newName;
+                document.getElementById('editProductForm').style.display = 'none';
+                alert("Sửa sản phẩm thành công!");
+                displayProducts();
+            } else {
+                alert("Tên sản phẩm không được để trống!");
+            }
+        }
+
+        function deleteProduct(index) {
+            if (confirm("Bạn có chắc muốn xóa sản phẩm này không?")) {
+                products.splice(index, 1);
+                alert("Xóa sản phẩm thành công!");
+                displayProducts();
+            }
+        }
+
+        document.getElementById('addProductForm').addEventListener('submit', addProduct);
+
+        displayProducts();
+    </script>
+</body>
+</html>

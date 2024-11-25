@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo jQuery Tab - CRUD và Tìm kiếm</title>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #tabs {
+            width: 80%;
+            margin: 0 auto;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px 0;
+        }
+        .tab-content {
+            margin-top: 20px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+          
+            $("#tabs").tabs();
+
+            $("#add-item").click(function() {
+                let itemName = $("#item-name").val();
+                if(itemName) {
+                    $("#item-list").append("<li>" + itemName + " <button class='delete-item'>Xóa</button></li>");
+                    $("#item-name").val('');
+                } else {
+                    alert("Vui lòng nhập tên mục.");
+                }
+            });
+
+            $(document).on('click', '.delete-item', function() {
+                $(this).parent().remove();
+            });
+
+            $("#search-item").click(function() {
+                let searchQuery = $("#search-query").val().toLowerCase();
+                $("#search-result").empty();
+                if (searchQuery) {
+                    $("#item-list li").each(function() {
+                        let itemName = $(this).text().toLowerCase();
+                        if(itemName.includes(searchQuery)) {
+                            $("#search-result").append("<p>" + $(this).text() + "</p>");
+                        }
+                    });
+                } else {
+                    alert("Vui lòng nhập từ khóa tìm kiếm.");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <h2>Demo jQuery UI Tab</h2>
+
+    <div id="tabs">
+        <ul>
+            <li><a href="#tab-1">CRUD</a></li>
+            <li><a href="#tab-2">Tìm kiếm</a></li>
+        </ul>
+
+        <div id="tab-1" class="tab-content">
+            <h3>Quản lý mục (CRUD)</h3>
+            <label for="item-name">Tên mục: </label>
+            <input type="text" id="item-name" placeholder="Nhập tên mục">
+            <button id="add-item">Thêm mục</button>
+            <ul id="item-list">
+           
+            </ul>
+        </div>
+
+      
+        <div id="tab-2" class="tab-content">
+            <h3>Tìm kiếm mục</h3>
+            <label for="search-query">Từ khóa: </label>
+            <input type="text" id="search-query" placeholder="Nhập từ khóa tìm kiếm">
+            <button id="search-item">Tìm kiếm</button>
+            <div id="search-result">
+            
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

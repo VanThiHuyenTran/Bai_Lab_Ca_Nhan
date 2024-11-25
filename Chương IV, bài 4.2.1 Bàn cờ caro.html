@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bàn Cờ Caro</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(10, 50px);
+            grid-template-rows: repeat(10, 50px);
+            gap: 5px;
+            visibility: hidden;
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #888;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        .cell:nth-child(odd) {
+            background-color: gray;
+        }
+        .cell:nth-child(even) {
+            background-color: gray;
+        }
+        .board.visible {
+            visibility: visible;
+            animation: fadeIn 0.8s ease-in;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="toggleBoard()">Hiện/Ẩn Bàn Cờ</button>
+    <div id="board" class="board"></div>
+
+    <script>
+        let currentPlayer = 'X';
+        const board = document.getElementById('board');
+
+        const createBoard = () => {
+            for (let i = 0; i < 100; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.addEventListener('click', () => markCell(cell));
+                board.appendChild(cell);
+            }
+        };
+
+        const toggleBoard = () => {
+            board.classList.toggle('visible');
+        };
+
+        const markCell = (cell) => {
+            if (!cell.textContent) {
+                cell.textContent = currentPlayer;
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+        };
+
+        createBoard();
+    </script>
+</body>
+</html>

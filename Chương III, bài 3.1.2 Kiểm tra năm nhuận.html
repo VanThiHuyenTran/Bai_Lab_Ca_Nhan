@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Kiểm tra năm nhuận và số ngày trong tháng</title>
+        <script>
+            function checkLeapYear() {
+
+                let year = parseInt(document.getElementById("year").value);
+                let isLeapYear = false;
+
+                if (year % 4 === 0) {
+                    if (year % 100 !== 0 || (year % 400 === 0)) {
+                        isLeapYear = true;
+                    }
+                }
+
+                if (isLeapYear) {
+                    alert(year + ": năm nhuận");
+                } else {
+                    alert(year + ": năm không nhuận");
+                }
+            }
+
+            function getDaysInMonth() {
+
+                let year = parseInt(document.getElementById("year").value);
+                let month = parseInt(document.getElementById("month").value);
+
+                if (isNaN(year) || isNaN(month)) {
+                    alert("Vui lòng nhập năm và tháng hợp lệ!");
+                    return;
+                }
+
+                let daysInMonth;
+
+                if (month === 1 || month === 3 || month === 5 || month === 7 || month === 8 || month === 10 || month === 12) {
+                    daysInMonth = 31;
+                }
+ 
+                else if (month === 4 || month === 6 || month === 9 || month === 11) {
+                    daysInMonth = 30;
+                }
+                
+                else if (month === 2) {
+                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+                        daysInMonth = 29;
+                    } else {
+                        daysInMonth = 28;
+                    }
+                } else {
+                    alert("Tháng không hợp lệ!");
+                    return;
+                }
+
+                alert("Tháng " + month + " năm " + year + " có " + daysInMonth + " ngày.");
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Kiểm tra năm nhuận và số ngày trong tháng</h1>
+
+        <label for="year">Nhập năm: </label>
+        <input type="number" id="year" placeholder="Nhập năm để kiểm tra" />
+        <br><br>
+
+        <label for="month">Nhập tháng (1-12): </label>
+        <input type="number" id="month" placeholder="Nhập tháng" min="1" max="12" />
+        <br><br>
+
+        <button onclick="checkLeapYear()">Kiểm tra năm nhuận</button>
+        <br><br>
+
+        <button onclick="getDaysInMonth()">Kiểm tra số ngày trong tháng</button>
+    </body>
+</html>

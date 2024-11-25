@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyển Đổi Năm Dương Lịch Thành Năm Âm Lịch</title>
+</head>
+<body>
+
+    <h1>Chuyển Đổi Năm Dương Lịch Thành Năm Âm Lịch</h1>
+    <input type="number" id="year" placeholder="Nhập năm dương lịch">
+    <button onclick="main()">Chuyển đổi</button>
+
+    <p id="result"></p>
+
+    <script>
+        function getValidYear() {
+            let year;
+            do {
+                year = parseInt(prompt("Nhập năm dương lịch (chỉ nhập số nguyên dương):"));
+                if (isNaN(year) || year <= 0) {
+                    alert("Năm dương lịch không hợp lệ.");
+                }
+            } while (isNaN(year) || year <= 0);
+            return year;
+        }
+
+        function getCanChi(year) {
+            let can = year % 10;
+            let chi = year % 12;
+
+            let canResult, chiResult;
+
+            switch (can) {
+                case 0: canResult = "Canh"; break;
+                case 1: canResult = "Tân"; break;
+                case 2: canResult = "Nhâm"; break;
+                case 3: canResult = "Quý"; break;
+                case 4: canResult = "Giáp"; break;
+                case 5: canResult = "Ất"; break;
+                case 6: canResult = "Bính"; break;
+                case 7: canResult = "Đinh"; break;
+                case 8: canResult = "Mậu"; break;
+                case 9: canResult = "Kỷ"; break;
+            }
+
+            switch (chi) {
+                case 0: chiResult = "Thân"; break;
+                case 1: chiResult = "Dậu"; break;
+                case 2: chiResult = "Tuất"; break;
+                case 3: chiResult = "Hợi"; break;
+                case 4: chiResult = "Tý"; break;
+                case 5: chiResult = "Sửu"; break;
+                case 6: chiResult = "Dần"; break;
+                case 7: chiResult = "Mão"; break;
+                case 8: chiResult = "Thìn"; break;
+                case 9: chiResult = "Tỵ"; break;
+                case 10: chiResult = "Ngọ"; break;
+                case 11: chiResult = "Mùi"; break;
+            }
+
+            return `${canResult} ${chiResult}`;
+        }
+
+        function main() {
+            let year = parseInt(document.getElementById("year").value);
+            if (isNaN(year) || year <= 0) {
+                alert("Vui lòng nhập năm dương lịch hợp lệ!");
+                return;
+            }
+            let lunarYear = getCanChi(year);
+            document.getElementById("result").innerHTML = `Năm dương lịch ${year} - năm âm lịch: ${lunarYear}`;
+        }
+    </script>
+
+</body>
+</html>

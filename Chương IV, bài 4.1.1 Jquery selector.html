@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery selector</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .error {
+            border: 1px solid red;
+            background-color: #f8d7da;
+        }
+
+        table tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        #content {
+            background-color: #f7f7f7;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        #menu {
+            background-image: url('https://www.example.com/bg.jpg');
+            border: 2px solid #000;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="toggleTitle">Chào bạn!</h1>
+    <div id="toggleBlock">
+        <p>HELLO!!!</p>
+    </div>
+    <button id="toggleButton">Ẩn/Hiện nội dung</button>
+
+    <h3>Checkboxes</h3>
+    <input type="checkbox" class="checkbox"> 1 nè
+    <input type="checkbox" class="checkbox"> 2 nè
+    <button id="showChecked">Hiển thị giá trị checkbox</button>
+
+    <h3>Chọn quốc gia</h3>
+    <select id="country">
+        <option value="VN">Việt Nam</option>
+        <option value="US">Mỹ</option>
+        <option value="JP">Nhật Bản</option>
+    </select>
+    <button id="showOptions">Hiển thị các option</button>
+
+    <div id="menu">
+        <img src="orange.png" alt="orgrange">
+        <img src="kiwi.png" alt="kiwi">
+    </div>
+    <button id="showImages">Hiển thị ảnh trong menu</button>
+
+    <h3>Form Input</h3>
+    <input type="text" class="text-input" placeholder="Nhập tên">
+    <input type="text" class="text-input" placeholder="Nhập sđt">
+    <button id="checkTextInputs">Kiểm tra các ô nhập liệu</button>
+
+    <div id="content">
+        <p>ảnh nền và đường kẻ.</p>
+    </div>
+    <br>
+    <table>
+        <tr>
+            <th>STT</th>
+            <th>Tên hàng</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>CPU</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>HDD</td>
+        </tr>
+    </table>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#toggleButton').click(function () {
+                $('#toggleBlock').toggle();
+                $('#toggleTitle').toggle();
+            });
+
+            $('#showChecked').click(function () {
+                var checkedValues = [];
+                $('input[type="checkbox"]:checked').each(function () {
+                    checkedValues.push($(this).val());
+                });
+                alert('Các checkbox đã chọn: ' + checkedValues.join(', '));
+            });
+
+            $('#showOptions').click(function () {
+                $('#country option').each(function () {
+                    console.log($(this).text() + ': ' + $(this).val());
+                });
+            });
+
+            $('#showImages').click(function () {
+                $('#menu img').each(function () {
+                    console.log('Ảnh: ' + $(this).attr('src'));
+                });
+            });
+
+            $('#checkTextInputs').click(function () {
+                $('input[type="text"]').each(function () {
+                    if ($(this).val() === '') {
+                        $(this).addClass('error');
+                    } else {
+                        $(this).removeClass('error');
+                    }
+                });
+            });
+
+            $('table tr').hover(
+                function () {
+                    $(this).css('background-color', '#f0f0f0');
+                },
+                function () {
+                    $(this).css('background-color', '');
+                }
+            );
+        });
+    </script>
+
+</body>
+</html>
